@@ -11,7 +11,7 @@ import {xdateToData, parseDate} from '../interface';
 import styleConstructor from './style';
 import Day from './day/basic';
 import UnitDay from './day/interactive';
-import CalendarHeader from './header';
+import CalendarWrapper from './wrapper';
 import shouldComponentUpdate from './updater';
 
 //Fallback when RN version is < 0.44
@@ -223,7 +223,7 @@ class Calendar extends Component {
     }
     return (
       <View style={[this.style.container, this.props.style]}>
-        <CalendarHeader
+        <CalendarWrapper
           theme={this.props.theme}
           hideArrows={this.props.hideArrows}
           month={this.state.currentMonth}
@@ -233,8 +233,9 @@ class Calendar extends Component {
           renderArrow={this.props.renderArrow}
           monthFormat={this.props.monthFormat}
           hideDayNames={this.props.hideDayNames}
-        />
-        {weeks}
+        >
+          {weeks}
+        </CalendarWrapper>
       </View>);
   }
 }

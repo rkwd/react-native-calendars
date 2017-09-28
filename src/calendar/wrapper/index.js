@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import styleConstructor from './style';
 import { weekDayNames } from '../../dateutils';
 
-class CalendarHeader extends Component {
+class CalendarWrapper extends Component {
   static propTypes = {
     theme: PropTypes.object,
     hideArrows: PropTypes.bool,
@@ -16,6 +16,10 @@ class CalendarHeader extends Component {
     firstDay: PropTypes.number,
     renderArrow: PropTypes.func,
     hideDayNames: PropTypes.bool,
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
   };
 
   constructor(props) {
@@ -81,6 +85,15 @@ class CalendarHeader extends Component {
     }
     return (
       <View>
+        {
+          !this.props.hideDayNames &&
+          <View style={this.style.week}>
+            {weekDaysNames.map((day, idx) => (
+              <Text key={idx} style={this.style.dayHeader} numberOfLines={1}>{day}</Text>
+            ))}
+          </View>
+        }
+        {this.props.children}
         <View style={this.style.header}>
           {leftArrow}
           <View style={{ flexDirection: 'row' }}>
@@ -91,17 +104,9 @@ class CalendarHeader extends Component {
           </View>
           {rightArrow}
         </View>
-        {
-          !this.props.hideDayNames &&
-          <View style={this.style.week}>
-            {weekDaysNames.map((day, idx) => (
-              <Text key={idx} style={this.style.dayHeader} numberOfLines={1}>{day}</Text>
-            ))}
-          </View>
-        }
       </View>
     );
   }
 }
 
-export default CalendarHeader;
+export default CalendarWrapper;
