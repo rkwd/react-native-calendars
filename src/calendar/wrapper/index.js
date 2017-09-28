@@ -38,6 +38,10 @@ class CalendarWrapper extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    // TODO: since this is a wrapper and not a header (as the original calendar component)
+    // we need a way to rerender children
+    // research for a better way to retain optimizations here
+    return true;
     if (
       nextProps.month.toString('yyyy MM') !==
       this.props.month.toString('yyyy MM')
