@@ -24,7 +24,7 @@ export default function styleConstructor(theme={}) {
     },
     base: {
       //borderWidth: 1,
-      width: dayWidth,
+      width: dayWidth - 8,
       height: FILLER_HEIGHT,
       alignItems: 'center'
     },

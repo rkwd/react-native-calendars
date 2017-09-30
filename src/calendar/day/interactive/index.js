@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Dimensions} from 'react-native'
 import PropTypes from 'prop-types';
 //import _ from 'lodash';
 import {
@@ -10,6 +11,9 @@ import {
 import dateutils from '../../../dateutils';
 import * as defaultStyle from '../../../style';
 import styleConstructor from './style';
+
+const { width: deviceWidth } = Dimensions.get('window');
+const dayWidth = deviceWidth / 7;
 
 class Day extends Component {
   static propTypes = {
@@ -172,22 +176,52 @@ class Day extends Component {
           backgroundColor: flags.endingDay.color
         });
       }
-
-      fillers = (
-        <View style={this.style.fillers}>
-          <View style={[this.style.leftFiller, leftFillerStyle]}/>
-          <View style={[this.style.rightFiller, rightFillerStyle]}/>
-        </View>
-      );
     }
 
     // additional styles to compensate for first/last day position
     if (this.props.day.getDate() === 1) {
       wrapperStyle = this.style.wrapperFirstDay;
+      if (!this.markingStyle.startingDay) {
+        leftFillerStyle = {
+          ...leftFillerStyle,
+          position: 'absolute',
+          left: 0,
+          right: 20
+        }
+      } else {
+        rightFillerStyle = {
+          ...rightFillerStyle,
+          position: 'absolute',
+          right: 0,
+          width: dayWidth/2
+        }
+      }
     }
     if (dateutils.isLastDateInMonth(this.props.day)) {
       wrapperStyle = this.style.wrapperLastDay;
+      if (!this.markingStyle.endingDay) {
+        rightFillerStyle = {
+          ...rightFillerStyle,
+          position: 'absolute',
+          right: 0,
+          left: 20
+        }
+      } else {
+        leftFillerStyle = {
+          ...leftFillerStyle,
+          position: 'absolute',
+          left: 0,
+          width: dayWidth/2
+        }
+      }
     }
+
+    fillers = (
+      <View style={this.style.fillers}>
+        <View style={[this.style.leftFiller, leftFillerStyle]}/>
+        <View style={[this.style.rightFiller, rightFillerStyle]}/>
+      </View>
+    );
 
     return (
       <TouchableWithoutFeedback onPress={this.onDayPress}>
