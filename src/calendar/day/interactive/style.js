@@ -1,20 +1,30 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import * as defaultStyle from '../../../style';
 
 const FILLER_HEIGHT = 34;
+const { width: deviceWidth } = Dimensions.get('window');
+const dayWidth = deviceWidth / 7;
 
 export default function styleConstructor(theme={}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
     wrapper: {
-      flex: 1,
+      width: dayWidth + 1,
       alignItems: 'center',
       alignSelf: 'stretch',
       marginLeft: -1
     },
+    wrapperFirstDay: {
+      flex: 1,
+      alignItems: 'flex-end',
+    },
+    wrapperLastDay: {
+      flex: 1,
+      alignItems: 'flex-start',
+    },
     base: {
       //borderWidth: 1,
-      width: 38,
+      width: dayWidth,
       height: FILLER_HEIGHT,
       alignItems: 'center'
     },

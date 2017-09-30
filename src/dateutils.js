@@ -40,6 +40,13 @@ function month(xd) {
   return fromTo(firstDay, lastDay);
 }
 
+function isLastDateInMonth(xd) {
+  var year = xd.getFullYear(), month = xd.getMonth();
+  var days = new Date(year, month + 1, 0).getDate();
+  var lastDay = new XDate(year, month, days, 0, 0, 0, true);
+  return sameDate(xd, lastDay);
+}
+
 function weekDayNames(firstDayOfWeek = 0) {
   let weekDaysNames = XDate.locales[XDate.defaultLocale].dayNamesShort;
   const dayShift = firstDayOfWeek % 7;
@@ -84,6 +91,7 @@ module.exports = {
   sameMonth,
   sameDate,
   month,
+  isLastDateInMonth,
   page,
   fromTo,
   isLTE,

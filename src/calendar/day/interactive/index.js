@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 
+import dateutils from '../../../dateutils';
 import * as defaultStyle from '../../../style';
 import styleConstructor from './style';
 
@@ -107,6 +108,7 @@ class Day extends Component {
   render() {
     const containerStyle = [this.style.base];
     const textStyle = [this.style.text];
+    let wrapperStyle = {};
     let leftFillerStyle = {};
     let rightFillerStyle = {};
     let fillers;
@@ -179,9 +181,17 @@ class Day extends Component {
       );
     }
 
+    // additional styles to compensate for first/last day position
+    if (this.props.day.getDate() === 1) {
+      wrapperStyle = this.style.wrapperFirstDay;
+    }
+    if (dateutils.isLastDateInMonth(this.props.day)) {
+      wrapperStyle = this.style.wrapperLastDay;
+    }
+
     return (
       <TouchableWithoutFeedback onPress={this.onDayPress}>
-        <View style={this.style.wrapper}>
+        <View style={[this.style.wrapper, wrapperStyle]}>
           {fillers}
           <View style={containerStyle}>
             <Text style={textStyle}>{String(this.props.children)}</Text>
