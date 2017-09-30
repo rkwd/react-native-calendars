@@ -18,8 +18,6 @@ export default function getStyle(theme={}) {
       color: appStyle.dayTextColor
     },
     calendar: {
-      paddingLeft: 15,
-      paddingRight: 15
     }
   });
 }
